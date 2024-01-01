@@ -2,6 +2,11 @@
   "name": "aayush-kirana-pasal-frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18.19.0",
+    "yarn": ">=please-use-npm",
+    "npm": "10.2.3"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
