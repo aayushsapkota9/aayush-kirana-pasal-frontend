@@ -8,7 +8,7 @@
     "npm": "10.2.3"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -16,6 +16,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"
