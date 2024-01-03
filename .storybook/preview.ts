@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react';
-
+import '../src/app/globals.css';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const BREAKPOINTS_INT = {
   xs: 375,
