@@ -1,14 +1,14 @@
 // import styles from './BaseTemplate.module.css';
 
-export interface IBaseTemplate {
+export interface ITextInput {
   sampleTextProp: string;
 }
 
-const BaseTemplate: React.FC<IBaseTemplate> = ({ sampleTextProp }) => {
+const TextInput: React.FC<ITextInput> = ({ sampleTextProp }) => {
   return (
     <div className="bg-gradient-to-r from-cyan-500 to-blue-500">
       {sampleTextProp}
     </div>
   );
 };
-export default BaseTemplate;
+export default TextInput;

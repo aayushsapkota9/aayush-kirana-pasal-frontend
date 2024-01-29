@@ -1,9 +1,9 @@
-import { IBaseTemplate } from './TextInput';
+import { ITextInput } from './TextInput';
 
-const base: IBaseTemplate = {
+const base: ITextInput = {
   sampleTextProp: 'Hello world!',
 };
 
-export const mockBaseTemplateProps = {
+export const mockTextInputProps = {
   base,
 };
