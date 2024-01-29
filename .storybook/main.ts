@@ -9,6 +9,8 @@ const config: StorybookConfig = {
     '@storybook/addon-onboarding',
     '@storybook/addon-interactions',
     'storybook-css-modules-preset',
+    '@storybook/addon-styling-webpack', // Add this line only if you are not using Vite
+    'storybook-dark-mode',
     {
       /**
        * Fix Storybook issue with PostCSS@8
