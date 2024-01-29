@@ -1,3 +1,5 @@
+import { TextInput } from '@mantine/core';
+import '@mantine/core/styles.css';
 import CatCard from '../components/cards/cat/CatCard';
 import { mockCatCardProps } from '../components/cards/cat/CatCard.mocks';
 
@@ -9,6 +11,7 @@ export default function Home() {
         <CatCard {...mockCatCardProps.base} />
         <CatCard {...mockCatCardProps.base} />
         <CatCard {...mockCatCardProps.base} />
+        <TextInput label="Label" placeholder="Placeholder"></TextInput>
       </div>
     </main>
   );
