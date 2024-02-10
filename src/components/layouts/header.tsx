@@ -37,9 +37,7 @@ const Header: React.FC<HeaderProps> = ({
         visibleFrom="sm"
         size="sm"
       />
-      <div className="font-semibold">
-        You are: {currentUser && currentUser.name}
-      </div>
+      <div className="font-semibold">{currentUser && currentUser.email}</div>
       {/* {currentUser?. && <div>Avatar</div>} */}
       <button
         onClick={() => {

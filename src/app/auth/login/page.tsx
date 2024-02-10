@@ -1,5 +1,11 @@
 'use client';
 import { useLogin } from '@/src/hooks/auth/userLogin';
+import { MESSAGE } from '@/src/types/enums/notification.enums';
+import {
+  showErrorNotification,
+  showSuccessNotification,
+  showWarningNotification,
+} from '@/src/utils/notificationUtils';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -11,15 +17,17 @@ export default function Login() {
 
   const onSubmit = () => {
     if (!name || !password) {
-      alert('Please enter information');
+      showWarningNotification(MESSAGE.ENTER_CREDENTIALS);
     } else {
       login(name, password)
-        .then(() => {
+        .then((res) => {
+          showSuccessNotification(MESSAGE.LOGIN_SUCCESS);
           router.push('/admin/dashboard');
         })
         .catch((e) => {
-          console.error('Login failed:');
-          alert(e);
+          showErrorNotification(
+            `${MESSAGE.LOGIN_FAILED}${e.response.statusText}`
+          );
         });
     }
   };

@@ -1,5 +1,4 @@
 import { HttpService } from '.';
-import { User } from '../types/user';
 
 export class AuthService {
   login = async (username: string, password: string) => {
@@ -8,21 +7,28 @@ export class AuthService {
       email: username,
       password,
     });
+    debugger;
     if (response.status !== 200) {
       return null;
     }
     const jwtToken = response.data.access_token;
-    const [payload] = jwtToken.split('.');
+    const [header, payload, signature] = jwtToken.split('.');
     const decodedPayload = JSON.parse(atob(payload));
-    const user: User = {
-      name: decodedPayload.name,
-      email: decodedPayload.email,
-      roles: decodedPayload.roles,
-      id: decodedPayload.id,
-      expiredAt: decodedPayload.exp,
+    const name = decodedPayload.name;
+    const email = decodedPayload.email;
+    const roles = decodedPayload.roles;
+    const id = decodedPayload.id;
+    const expiredAt = decodedPayload.exp;
+    debugger;
+
+    return {
+      name,
+      email,
+      roles,
+      id,
+      expiredAt,
       accessToken: jwtToken,
     };
-    return user;
   };
 
   getMe = (_userId: string) => {
