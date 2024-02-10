@@ -3,7 +3,7 @@ import { Skeleton } from '@mantine/core';
 const Navbar = () => {
   return (
     <>
-      Navbar
+      Aayush Kirana Pasal
       {Array(15)
         .fill(0)
         .map((_, index) => (
