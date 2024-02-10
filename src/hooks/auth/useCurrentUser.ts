@@ -14,7 +14,7 @@ export const useCurrentUser = () => {
   }, []);
 
   const refetchUser = async (userId: string) => {
-    const userInfo = await authService.getMe(userId);
+    const userInfo: any = await authService.getMe(userId);
     const currentUser = Cookies.get('currentUser');
 
     if (userInfo && currentUser) {

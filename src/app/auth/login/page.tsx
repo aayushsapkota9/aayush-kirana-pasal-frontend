@@ -14,11 +14,11 @@ export default function Login() {
       alert('Please enter information');
     } else {
       login(name, password)
-        .then((res) => {
+        .then(() => {
           router.push('/admin/dashboard');
         })
         .catch((e) => {
-          console.error('Login failed:', e);
+          console.error('Login failed:');
           alert(e);
         });
     }

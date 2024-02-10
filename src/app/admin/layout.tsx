@@ -1,6 +1,5 @@
 'use client';
 import Header from '@/src/components/layouts/header';
-import Navbar from '@/src/components/layouts/navbar';
 import { AppShell } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
@@ -30,9 +29,7 @@ export default function DashboardLayout({
           toggleDesktop={toggleDesktop}
         ></Header>
       </AppShell.Header>
-      <AppShell.Navbar p="md">
-        <Navbar></Navbar>
-      </AppShell.Navbar>
+      <AppShell.Navbar p="md">{/* <Navbar></Navbar> */}</AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );

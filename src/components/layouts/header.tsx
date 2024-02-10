@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({
   desktopOpened,
   toggleDesktop,
 }) => {
-  const { user: currentUser, refetchUser } = useCurrentUser();
+  const { user: currentUser } = useCurrentUser();
 
   const { logout } = useLogout();
   const router = useRouter();
@@ -37,15 +37,10 @@ const Header: React.FC<HeaderProps> = ({
         visibleFrom="sm"
         size="sm"
       />
-      <div className="font-semibold">You are: {currentUser?.username}</div>
-      {currentUser?.avatar && (
-        <img
-          width={40}
-          alt=""
-          className="max-w-120 max-h-80"
-          src={currentUser.avatar}
-        />
-      )}
+      <div className="font-semibold">
+        You are: {currentUser && currentUser.name}
+      </div>
+      {/* {currentUser?. && <div>Avatar</div>} */}
       <button
         onClick={() => {
           logout();
