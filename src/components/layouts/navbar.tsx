@@ -1,17 +1,26 @@
+'use client';
+import { sidebarConfig } from '@/src/config/sidebarConfig';
 import { useCurrentUser } from '@/src/hooks/auth/useCurrentUser';
-import { Skeleton } from '@mantine/core';
+import { NavLink } from '@mantine/core';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const { user: currentUser } = useCurrentUser();
+  const pathname = usePathname();
+
+  const isLinkActive = (link: string) => pathname === link;
 
   return (
     <>
       {currentUser && currentUser.name}
-      {Array(15)
-        .fill(0)
-        .map((_, index) => (
-          <Skeleton key={index} h={28} mt="sm" animate={false} />
-        ))}
+      {sidebarConfig.map((item) => (
+        <NavLink
+          key={item.label}
+          label={item.label}
+          href={item.link}
+          active={isLinkActive(item.link)}
+        />
+      ))}
     </>
   );
 };

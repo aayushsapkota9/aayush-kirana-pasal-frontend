@@ -1,4 +1,4 @@
-// Header.js
+'use client';
 import { useCurrentUser } from '@/src/hooks/auth/useCurrentUser';
 import { useLogout } from '@/src/hooks/auth/useLogout';
 import { Burger, Group } from '@mantine/core';
