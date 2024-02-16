@@ -12,6 +12,7 @@ export class AuthService {
       return null;
     }
     const jwtToken = response.data.access_token;
+    // eslint-disable-next-line
     const [header, payload, signature] = jwtToken.split('.');
     const decodedPayload = JSON.parse(atob(payload));
     const name = decodedPayload.name;
@@ -19,7 +20,6 @@ export class AuthService {
     const roles = decodedPayload.roles;
     const id = decodedPayload.id;
     const expiredAt = decodedPayload.exp;
-    debugger;
 
     return {
       name,

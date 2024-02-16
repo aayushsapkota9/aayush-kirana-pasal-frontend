@@ -22,6 +22,7 @@ const Data = async ({ page }: { page: string | null | number }) => {
   ];
   return (
     <div>
+      {' '}
       <CustomTable columns={columns} elements={tableData} />
     </div>
   );
