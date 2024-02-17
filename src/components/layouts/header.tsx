@@ -1,6 +1,6 @@
 'use client';
-import { useCurrentUser } from '@/src/hooks/auth/useCurrentUser';
 import { useLogout } from '@/src/hooks/auth/useLogout';
+import { User } from '@/src/types/user';
 import { Burger, Group } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -11,6 +11,7 @@ interface HeaderProps {
 
   desktopOpened: boolean;
   toggleDesktop: () => void;
+  currentUser: User | null;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -18,11 +19,11 @@ const Header: React.FC<HeaderProps> = ({
   toggleMobile,
   desktopOpened,
   toggleDesktop,
+  currentUser,
 }) => {
-  const { user: currentUser } = useCurrentUser();
-
   const { logout } = useLogout();
   const router = useRouter();
+
   return (
     <Group h="100%" px="md">
       <Burger

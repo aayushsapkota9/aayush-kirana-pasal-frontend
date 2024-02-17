@@ -1,14 +1,16 @@
 'use client';
 import { sidebarConfig } from '@/src/config/sidebarConfig';
-import { useCurrentUser } from '@/src/hooks/auth/useCurrentUser';
+import { User } from '@/src/types/user';
 import { NavLink } from '@mantine/core';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
-const Navbar = () => {
-  const { user: currentUser } = useCurrentUser();
+const Navbar = ({ currentUser }: { currentUser: User | null }) => {
+  const router = useRouter();
   const pathname = usePathname();
 
-  const isLinkActive = (link: string) => pathname === link;
+  const isLinkActive = (link: string) => {
+    return pathname.split('/').includes(link);
+  };
 
   return (
     <>
@@ -17,8 +19,11 @@ const Navbar = () => {
         <NavLink
           key={item.label}
           label={item.label}
-          href={item.link}
-          active={isLinkActive(item.link)}
+          // href={item.link}
+          onClick={() => {
+            router.push(item.link);
+          }}
+          active={isLinkActive(item.key)}
         />
       ))}
     </>

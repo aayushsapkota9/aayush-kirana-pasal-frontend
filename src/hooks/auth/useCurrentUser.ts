@@ -8,25 +8,36 @@ export const useCurrentUser = () => {
 
   useEffect(() => {
     const currentUser = Cookies.get('currentUser');
-    if (currentUser) {
-      setUser(JSON.parse(currentUser));
+
+    try {
+      if (currentUser) {
+        const parsedUser = JSON.parse(currentUser);
+        setUser(parsedUser);
+      }
+    } catch (error) {
+      // Handle JSON parsing error if needed
+      console.error('Error parsing currentUser cookie:', error);
     }
   }, []);
 
   const refetchUser = async (userId: string) => {
-    const userInfo: any = await authService.getMe(userId);
-    const currentUser = Cookies.get('currentUser');
+    try {
+      const userInfo: any = await authService.getMe(userId);
+      const currentUser = Cookies.get('currentUser');
 
-    if (userInfo && currentUser) {
-      const newUser = {
-        ...JSON.parse(currentUser),
-        username: userInfo.username,
-        avatar: userInfo.avatar,
-      };
-      Cookies.set('currentUser', JSON.stringify(newUser));
-      setUser(newUser);
+      if (userInfo && currentUser) {
+        const newUser = {
+          ...JSON.parse(currentUser),
+          username: userInfo.username,
+          avatar: userInfo.avatar,
+        };
+        Cookies.set('currentUser', JSON.stringify(newUser));
+        setUser(newUser);
+      }
+    } catch (error) {
+      // Handle refetching error if needed
+      console.error('Error refetching user:', error);
     }
   };
-
   return { user, refetchUser };
 };

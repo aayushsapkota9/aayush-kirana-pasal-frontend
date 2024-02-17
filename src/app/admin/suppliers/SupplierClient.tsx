@@ -3,7 +3,11 @@ import Heading from '@/src/components/heading/heading';
 import { CustomPagination } from '@/src/components/mantine';
 import React from 'react';
 
-const ClientComponent = ({ children }: { children: React.ReactNode }) => {
+const SupplierClientComponent = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
     <div>
       <div className="table-top">
@@ -17,4 +21,4 @@ const ClientComponent = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default ClientComponent;
+export default SupplierClientComponent;

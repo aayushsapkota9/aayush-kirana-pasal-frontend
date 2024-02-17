@@ -1,6 +1,7 @@
 'use client';
 import Header from '@/src/components/layouts/header';
 import Navbar from '@/src/components/layouts/navbar';
+import { useCurrentUser } from '@/src/hooks/auth/useCurrentUser';
 import {
   AppShell,
   AppShellHeader,
@@ -8,6 +9,7 @@ import {
   AppShellNavbar,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import React from 'react';
 
 export default function DashboardLayout({
   children,
@@ -16,6 +18,7 @@ export default function DashboardLayout({
 }) {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+  const { user: currentUser, refetchUser } = useCurrentUser();
 
   return (
     <AppShell
@@ -33,21 +36,13 @@ export default function DashboardLayout({
           toggleMobile={toggleMobile}
           desktopOpened={desktopOpened}
           toggleDesktop={toggleDesktop}
-        ></Header>
+          currentUser={currentUser}
+        />
       </AppShellHeader>
       <AppShellNavbar p="md">
-        <Navbar></Navbar>
+        <Navbar currentUser={currentUser} />
       </AppShellNavbar>
       <AppShellMain>{children}</AppShellMain>
     </AppShell>
   );
 }
-// 'use client';
-
-// export default function DashboardLayout({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   return <>{children}</>;
-// }
