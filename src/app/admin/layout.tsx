@@ -18,7 +18,7 @@ export default function DashboardLayout({
 }) {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-  const { user: currentUser, refetchUser } = useCurrentUser();
+  const { user: currentUser } = useCurrentUser();
 
   return (
     <AppShell

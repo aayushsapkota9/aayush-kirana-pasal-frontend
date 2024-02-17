@@ -20,7 +20,7 @@ interface Column {
 interface CustomTableProps {
   columns: Column[];
   elements: Element[];
-  actions?: (element: Element) => React.ReactNode; // Function to render actions
+  actions?: (element: Element) => React.ReactNode; // eslint-disable-line no-unused-vars
 }
 
 const CustomTable = ({ columns, elements, actions }: CustomTableProps) => {
