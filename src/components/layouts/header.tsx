@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({
   const router = useRouter();
 
   return (
-    <Group h="100%" px="md">
+    <Group h="100%" px="md" className="flex justify-between">
       <Burger
         opened={mobileOpened}
         onClick={toggleMobile}
@@ -38,17 +38,21 @@ const Header: React.FC<HeaderProps> = ({
         visibleFrom="sm"
         size="sm"
       />
-      <div className="font-semibold">{currentUser && currentUser.email}</div>
-      {/* {currentUser?. && <div>Avatar</div>} */}
-      <button
-        onClick={() => {
-          logout();
-          router.push('/auth/login');
-        }}
-        className="mt-2 border border-solid border-black py-2 px-4 rounded cursor-pointer"
-      >
-        Logout
-      </button>
+      <div className="flex justify-center items-center gap-5">
+        {' '}
+        <div className="hidden md:block md:font-semibold lg:block lg:font-semibold">
+          {currentUser && currentUser.email}
+        </div>
+        <button
+          onClick={() => {
+            logout();
+            router.push('/auth/login');
+          }}
+          className="mt-2 border border-solid border-black py-2 px-4 rounded cursor-pointer"
+        >
+          Logout
+        </button>
+      </div>
     </Group>
   );
 };

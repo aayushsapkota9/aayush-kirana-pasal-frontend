@@ -1,3 +1,4 @@
+'use client';
 import {
   Table,
   TableTbody,
@@ -20,7 +21,7 @@ interface Column {
 interface CustomTableProps {
   columns: Column[];
   elements: Element[];
-  actions?: (element: Element) => React.ReactNode; // eslint-disable-line no-unused-vars
+  actions?: any; // Updated the type here
 }
 
 const CustomTable = ({ columns, elements, actions }: CustomTableProps) => {
@@ -31,7 +32,7 @@ const CustomTable = ({ columns, elements, actions }: CustomTableProps) => {
       ))}
       {actions && (
         <TableTd key="actions" className="flex gap-2">
-          {actions(element)}
+          {React.createElement(actions, { id: element.id })}
         </TableTd>
       )}
     </TableTr>

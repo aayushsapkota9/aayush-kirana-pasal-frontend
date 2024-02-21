@@ -1,57 +1,50 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-
-// COOKIES
 import Cookies from 'js-cookie';
-
-// TYPES
-import { EHttpMethod, IService } from '../types/index';
+import { EHttpMethod } from '../types/index';
 
 class HttpService {
-  private http: AxiosInstance;
-  private baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+  private baseURL: string;
 
   constructor() {
-    this.http = axios.create({
-      baseURL: this.baseURL,
-      withCredentials: false,
-      headers: this.setupHeaders(),
-    });
+    this.baseURL = process.env.NEXT_PUBLIC_BASE_URL || '';
   }
 
   // Get authorization token for requests
-  private get getAuthorization() {
+  private getAuthorization(): Record<string, string> {
     const accessToken = Cookies.get('AccessToken') || '';
     return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
   }
 
   // Initialize service configuration
-  public service() {
-    this.injectInterceptors();
-
+  public service(): HttpService {
     return this;
   }
 
   // Set up request headers
-  private setupHeaders(hasAttachment = false) {
+  private setupHeaders(hasAttachment = false): Record<string, string> {
     return hasAttachment
-      ? { 'Content-Type': 'multipart/form-data', ...this.getAuthorization }
-      : { 'Content-Type': 'application/json', ...this.getAuthorization };
+      ? { 'Content-Type': 'multipart/form-data', ...this.getAuthorization() }
+      : { 'Content-Type': 'application/json', ...this.getAuthorization() };
   }
 
-  // Handle HTTP requests
+  // Handle HTTP requests using Fetch API
   private async request<T>(
     method: EHttpMethod,
     url: string,
-    options: AxiosRequestConfig
+    // eslint-disable-next-line no-undef
+    options: RequestInit
   ): Promise<T> {
     try {
-      const response: AxiosResponse<T> = await this.http.request<T>({
+      const customOptions = {
+        headers: new Headers(options.headers),
+        ...options.next,
+      };
+      const response = await fetch(`${this.baseURL}${url}`, {
         method,
-        url,
-        ...options,
+        ...customOptions,
+        body: options.body, // Include the body property if it exists
       });
 
-      return response.data;
+      return (await response.json()) as T;
     } catch (error) {
       return this.normalizeError(error);
     }
@@ -60,25 +53,26 @@ class HttpService {
   // Perform GET request
   public async get<T>(
     url: string,
-    params?: IService.IParams,
-    hasAttachment = false
+    customOptions: Record<string, any> = {}
   ): Promise<T> {
-    return this.request<T>(EHttpMethod.GET, url, {
-      params,
+    const hasAttachment = false;
+    // eslint-disable-next-line no-undef
+    const options: RequestInit = {
       headers: this.setupHeaders(hasAttachment),
-    });
+      ...customOptions,
+    };
+
+    return this.request<T>(EHttpMethod.GET, url, options);
   }
 
   // Perform POST request
   public async push<T, P>(
     url: string,
     payload: P,
-    params?: IService.IParams,
     hasAttachment = false
   ): Promise<T> {
     return this.request<T>(EHttpMethod.POST, url, {
-      params,
-      data: payload,
+      body: JSON.stringify(payload),
       headers: this.setupHeaders(hasAttachment),
     });
   }
@@ -87,53 +81,24 @@ class HttpService {
   public async update<T, P>(
     url: string,
     payload: P,
-    params?: IService.IParams,
     hasAttachment = false
   ): Promise<T> {
     return this.request<T>(EHttpMethod.PUT, url, {
-      params,
-      data: payload,
+      body: JSON.stringify(payload),
       headers: this.setupHeaders(hasAttachment),
     });
   }
 
   // Perform DELETE request
-  public async remove<T>(
-    url: string,
-    params?: IService.IParams,
-    hasAttachment = false
-  ): Promise<T> {
-    return this.request<T>(EHttpMethod.DELETE, url, {
-      params,
+  public async remove<T>(url: string): Promise<T> {
+    const hasAttachment = false;
+    return this.request<T>(EHttpMethod.DELETE, `${url}`, {
       headers: this.setupHeaders(hasAttachment),
     });
   }
 
-  // Inject interceptors for request and response
-  private injectInterceptors() {
-    // Set up request interceptor
-    this.http.interceptors.request.use((request) => {
-      // * Perform an action
-      // TODO: implement an NProgress
-      return request;
-    });
-
-    // Set up response interceptor
-    this.http.interceptors.response.use(
-      (response) => {
-        // * Do something
-        return response;
-      },
-
-      (error) => {
-        // * Implement a global error alert
-        return Promise.reject(error);
-      }
-    );
-  }
-
   // Normalize errors
-  private normalizeError(error: any) {
+  private normalizeError(error: any): Promise<any> {
     return Promise.reject(error);
   }
 }

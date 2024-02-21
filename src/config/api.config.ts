@@ -3,8 +3,9 @@ const apiRoutes = {
     login: '/auth/login',
   },
   suppliers: {
-    getAllSuppliers: (params?: string) => `/supplier?${params}`,
+    supplier: '/supplier',
     suppliersById: (id: any) => `/supplier/${id}`,
+    getAllSuppliers: (params?: string) => `/supplier?${params}`,
     searchSuppliers: `/supplier/find/`,
   },
 };

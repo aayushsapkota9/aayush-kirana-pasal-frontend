@@ -7,6 +7,13 @@ export const showSuccessNotification = (message: string) => {
     autoClose: 2000,
   });
 };
+export const showNotificationOnRes = (res: any) => {
+  showNotification({
+    message: res.message,
+    color: res.success ? 'green' : 'red',
+    autoClose: 2000,
+  });
+};
 
 export const showErrorNotification = (message: string) => {
   showNotification({

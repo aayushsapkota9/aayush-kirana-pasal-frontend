@@ -1,5 +1,6 @@
 'use client';
 import { sidebarConfig } from '@/src/config/sidebarConfig';
+import { COLOR } from '@/src/types/enums/colors.enums';
 import { User } from '@/src/types/user';
 import { NavLink } from '@mantine/core';
 import { usePathname, useRouter } from 'next/navigation';
@@ -19,6 +20,7 @@ const Navbar = ({ currentUser }: { currentUser: User | null }) => {
         <NavLink
           key={item.label}
           label={item.label}
+          color={COLOR.primary}
           // href={item.link}
           onClick={() => {
             router.push(item.link);

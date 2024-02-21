@@ -1,4 +1,5 @@
 'use client';
+import { COLOR } from '@/src/types/enums/colors.enums';
 import { Pagination } from '@mantine/core';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
@@ -18,6 +19,7 @@ const CustomPagination = ({ totalPages }: { totalPages: number }) => {
   );
   return (
     <Pagination
+      color={COLOR.primary}
       onChange={(e) => {
         router.push(pathname + '?' + createQueryString('page', e.toString()));
       }}

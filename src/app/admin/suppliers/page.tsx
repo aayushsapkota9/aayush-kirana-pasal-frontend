@@ -2,13 +2,19 @@ import { CustomTable } from '@/src/components/mantine';
 import apiRoutes from '@/src/config/api.config';
 import { HttpService } from '@/src/services';
 import { addIndicesToElements } from '@/src/utils/addIndicesToElements';
-import SupplierClientComponent from './SupplierClient';
-const getTableData = async ({ page }: { page: string | null | number }) => {
+import SupplierClientComponent, {
+  SupplierActionButton,
+} from './SupplierClient';
+const getTableData = async ({ page = 1 }: { page: string | null | number }) => {
   const http = new HttpService();
   const response: any = await http
     .service()
-    .get(apiRoutes.suppliers.getAllSuppliers(`page=${page || 1}&limit=10`));
-  const array = addIndicesToElements(response.data.result);
+    .get(apiRoutes.suppliers.getAllSuppliers(`page=${page}&limit=10`), {
+      next: {
+        cache: 'no-store',
+      },
+    });
+  const array = addIndicesToElements(response?.data?.result);
   return array;
 };
 const Supplier = async ({
@@ -23,9 +29,14 @@ const Supplier = async ({
     { key: 'address', displayName: 'Address' },
     { key: 'phone', displayName: 'Phone' },
   ];
+
   return (
     <SupplierClientComponent>
-      <CustomTable columns={columns} elements={tableData} />
+      <CustomTable
+        columns={columns}
+        elements={tableData}
+        actions={SupplierActionButton}
+      />
     </SupplierClientComponent>
   );
 };
