@@ -11,7 +11,7 @@
     "webpack": "^5"
   },
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev -p 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -28,10 +28,11 @@
     "@mantine/hooks": "^7.5.0",
     "@mantine/next": "^6.0.21",
     "@mantine/notifications": "^7.5.2",
-    "@tabler/icons-react": "^2.46.0",
+    "@tabler/icons-react": "^2.47.0",
     "axios": "^1.6.7",
     "cross-env": "^7.0.3",
     "js-cookie": "^3.0.1",
+    "lodash": "^4.17.21",
     "next": "14.0.4",
     "react": "^18",
     "react-cropper": "^2.3.3",

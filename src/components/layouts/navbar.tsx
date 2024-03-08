@@ -1,17 +1,33 @@
-import { useCurrentUser } from '@/src/hooks/auth/useCurrentUser';
-import { Skeleton } from '@mantine/core';
+'use client';
+import { sidebarConfig } from '@/src/config/sidebarConfig';
+import { COLOR } from '@/src/types/enums/colors.enums';
+import { User } from '@/src/types/user';
+import { NavLink } from '@mantine/core';
+import { usePathname, useRouter } from 'next/navigation';
 
-const Navbar = () => {
-  const { user: currentUser } = useCurrentUser();
+const Navbar = ({ currentUser }: { currentUser: User | null }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const isLinkActive = (link: string) => {
+    return pathname.split('/').includes(link);
+  };
 
   return (
     <>
       {currentUser && currentUser.name}
-      {Array(15)
-        .fill(0)
-        .map((_, index) => (
-          <Skeleton key={index} h={28} mt="sm" animate={false} />
-        ))}
+      {sidebarConfig.map((item) => (
+        <NavLink
+          key={item.label}
+          label={item.label}
+          color={COLOR.primary}
+          // href={item.link}
+          onClick={() => {
+            router.push(item.link);
+          }}
+          active={isLinkActive(item.key)}
+        />
+      ))}
     </>
   );
 };

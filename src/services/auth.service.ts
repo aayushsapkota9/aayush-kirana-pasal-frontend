@@ -1,17 +1,18 @@
 import { HttpService } from '.';
+import apiRoutes from '../config/api.config';
 
 export class AuthService {
   login = async (username: string, password: string) => {
     const http = new HttpService();
-    const response: any = await http.service().push(`/auth/login`, {
+    const response: any = await http.service().push(apiRoutes.auth.login, {
       email: username,
       password,
     });
-    debugger;
     if (response.status !== 200) {
       return null;
     }
     const jwtToken = response.data.access_token;
+    // eslint-disable-next-line
     const [header, payload, signature] = jwtToken.split('.');
     const decodedPayload = JSON.parse(atob(payload));
     const name = decodedPayload.name;
@@ -19,7 +20,6 @@ export class AuthService {
     const roles = decodedPayload.roles;
     const id = decodedPayload.id;
     const expiredAt = decodedPayload.exp;
-    debugger;
 
     return {
       name,
